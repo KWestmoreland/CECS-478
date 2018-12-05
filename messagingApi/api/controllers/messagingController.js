@@ -131,3 +131,51 @@ exports.delete_a_message = function(req, res) { //DELETE Request
    res.send(message);
  });
 };
+
+//Finds messages where querier is the receiver
+exports.read_new_messages = function(req, res) {
+ Message.find({receiver: req.params.receiver}, function(err,message) {
+   if (err)
+     res.send(err);
+   res.json(message);
+ });
+};
+/*
+//Save a new contact in the DB
+exports.create_a_contact = function(req, res) { //POST Request
+  var new_message = new Message(req.body); //Creates new message model with request
+
+  console.log(req.body); //Test show POST requests on console
+
+  new_message.save(function(err, message) { //Saves to the database
+    if (err){ //Error catching
+      res.status(422).send(err);
+      console.log('POST Error');}
+    else
+      res.json(message);
+  });
+};
+
+//Lists contacts for a given user
+exports.list_contacts = function(req, res) { //GET request of a specific id
+  Message.findById(req.params.sender_ID, function(err, message) {
+    if (err)
+      res.send(err);
+    res.json(message);
+  });
+};
+
+//Updates a contact with the parameters on request
+exports.update_a_contact = function(req, res) {
+ Message.findByIdAndUpdate({_id: req.params.messageId}, req.body, {new: true}).then(function(message){
+    res.json(message);
+ });
+};
+
+//Deletes a contact of given ID
+exports.delete_a_contact = function(req, res) { //DELETE Request
+ //Finds a message by _id value and deletes them from the database
+ Message.findByIdAndRemove({_id: req.params.messageId}).then(function(message){
+   res.send(message);
+ });
+};*/

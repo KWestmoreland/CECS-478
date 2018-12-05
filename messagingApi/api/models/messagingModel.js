@@ -13,7 +13,7 @@ var MessageSchema = new Schema({
     required: [true, 'Please enter a receiver']
   },
   message: {
-    type: String
+    type: String,
     required: [true, 'Please enter a message']
   },
   Message_date: {
@@ -34,7 +34,7 @@ var MessageSchema = new Schema({
 var UserSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'Please enter a name']
+    required: [true, 'Please enter a name'],
     unique: [true, 'This name is already in use']
   },
   password: {
@@ -42,6 +42,9 @@ var UserSchema = new Schema({
     required: [true, 'Please enter a password']
   },
 });
+
+//var UserSchema = new Schema({
+ // name
 
 module.exports = mongoose.model('Messages', MessageSchema);
 module.exports = mongoose.model('MyUsers', UserSchema);

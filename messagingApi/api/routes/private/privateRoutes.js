@@ -4,14 +4,23 @@ module.exports = function(app) {
   var verifyToken = require('../../../verifyToken');
 
   // todoList Routes
-  app.route('/messages')
+  app.route('/allmessages')
     .get(verifyToken, messagingController.list_all_messages)
-    .post(verifyToken, messagingController.create_a_message);
 
+  app.route('/messages')
+    .post(verifyToken, messagingController.create_a_message);
 
   app.route('/message/:messageId')
     .get(verifyToken, messagingController.read_a_message)
     .put(verifyToken, messagingController.update_a_message)
     .delete(verifyToken, messagingController.delete_a_message);
 
+  app.route('/messages/:receiver')
+    .get(verifyToken, messagingController.read_new_messages);
+
+ // app.route('/contacts/:userID')
+   // .get(verifyToken, messagingController.list_contacts)
+   // .post(verifyToken, messagingController.create_a_contact);
+   // .put(verifyToken, messagingController.update_a_contact)
+   // .delete(verifyToken, messagingController.delete_a_contact);
 };
