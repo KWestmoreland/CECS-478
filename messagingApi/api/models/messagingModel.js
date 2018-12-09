@@ -16,6 +16,14 @@ var MessageSchema = new Schema({
     type: String,
     required: [true, 'Please enter a message']
   },
+  iv: {
+    type: String,
+    default: 'None'
+  },
+  signature: {
+    type: String,
+    default: 'None'
+  },
   Message_date: {
     type: Date,
     default: Date.now
@@ -23,10 +31,6 @@ var MessageSchema = new Schema({
   status: {
     type: String,
     default: 'New'
-  },
-  sender_ID: {
-    type: String,
-    default: 'None'
   },
 });
 
@@ -40,6 +44,18 @@ var UserSchema = new Schema({
   password: {
     type: String,
     required: [true, 'Please enter a password']
+  },
+  DH_Pub_Key: {
+    type: String,
+    default: 'None'
+  },
+  Signed_DH_Pub_Key: {
+    type: String,
+    default: 'None'
+  },
+  RSA_Pub_Key: {
+    type: String,
+    default: 'None'
   },
 });
 

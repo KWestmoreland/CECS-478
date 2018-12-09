@@ -33,7 +33,10 @@ exports.register = function(req, res) { //POST Request
   var hashedPassword = bcrypt.hashSync(req.body.password, config.saltRounds);
   var new_user = new User({
     name : req.body.name,
-    password : hashedPassword
+    password : hashedPassword,
+    DH_Pub_Key : req.body.DH_Pub_Key,
+    Signed_DH_Pub_Key : req.body.Signed_DH_Pub_Key,
+    RSA_Pub_Key : req.body.RSA_Pub_Key
   });
  
   console.log(req.body);
@@ -43,8 +46,13 @@ exports.register = function(req, res) { //POST Request
       res.status(422).send(err);
       console.log('User register error');
     }
-    else
-     res.json(user);
+    else {
+     res.json({
+       success: true,
+       message: 'Register has been successful',
+       username: user.name
+     });
+    }
   });
 };
 
@@ -85,7 +93,7 @@ exports.signin = function(req, res) {
           success: true,
           message: 'Enjoy your token',
           token: token,
-          user_ID: user._id
+          username: user.name
         });
       }
     }
@@ -103,7 +111,10 @@ exports.create_a_message = function(req, res) { //POST Request
       res.status(422).send(err);
       console.log('POST Error');}
     else
-      res.json(message);
+      res.json({
+	message: 'Messaged posted successfully',
+	payload: message
+      });
   });
 };
 
@@ -128,7 +139,9 @@ exports.delete_a_message = function(req, res) { //DELETE Request
 
 //Finds a message by _id value and deletes them from the database
  Message.findByIdAndRemove({_id: req.params.messageId}).then(function(message){
-   res.send(message);
+   res.send({
+     message: 'Message deleted successfully'
+   });
  });
 };
 
@@ -140,6 +153,16 @@ exports.read_new_messages = function(req, res) {
    res.json(message);
  });
 };
+
+//Lists info for a given user
+exports.retrieve_public_keys = function(req, res) { //GET request of a specific id
+  User.find({name: req.params.username}, function(err, message) {
+    if (err)
+      res.send(err);
+    res.json(message);
+  });
+};
+
 /*
 //Save a new contact in the DB
 exports.create_a_contact = function(req, res) { //POST Request

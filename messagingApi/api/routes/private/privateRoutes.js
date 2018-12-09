@@ -18,6 +18,10 @@ module.exports = function(app) {
   app.route('/messages/:receiver')
     .get(verifyToken, messagingController.read_new_messages);
 
+  app.route('/api/users/:username')
+    .get(verifyToken, messagingController.retrieve_public_keys);
+
+
  // app.route('/contacts/:userID')
    // .get(verifyToken, messagingController.list_contacts)
    // .post(verifyToken, messagingController.create_a_contact);
