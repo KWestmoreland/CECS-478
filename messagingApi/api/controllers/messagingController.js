@@ -28,6 +28,17 @@ exports.list_all_users = function(req, res) {
   });
 };
 
+//Deletes all users in DB
+exports.delete_all_users = function(req, res) {
+  User.remove({}, function(err) {
+    if (err)
+      res.send(err);
+    res.send({
+      message: 'Users deleted succesfully'
+    });
+  });
+};
+
 //Saves a new User in the DB
 exports.register = function(req, res) { //POST Request
   var hashedPassword = bcrypt.hashSync(req.body.password, config.saltRounds);
@@ -143,6 +154,17 @@ exports.delete_a_message = function(req, res) { //DELETE Request
      message: 'Message deleted successfully'
    });
  });
+};
+
+//Deletes all messages
+exports.delete_all_messages = function(req, res) {
+  Message.remove({}, function(err) {
+    if (err)
+      res.send(err);
+    res.send({
+      message: 'Messages deleted successfully'
+    });
+  });
 };
 
 //Finds messages where querier is the receiver
