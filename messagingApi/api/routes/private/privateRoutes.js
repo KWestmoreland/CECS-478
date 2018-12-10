@@ -18,6 +18,12 @@ module.exports = function(app) {
   app.route('/messages/:receiver')
     .get(verifyToken, messagingController.read_new_messages);
 
+  app.route('/messages/new/:receiver')
+    .get(verifyToken, messagingController.read_new_unread_messages);
+
+  app.route('/messages/sent/:sender')
+    .get(verifyToken, messagingController.read_sent_messages);
+
   app.route('/api/users/:username')
     .get(verifyToken, messagingController.retrieve_public_keys);
 

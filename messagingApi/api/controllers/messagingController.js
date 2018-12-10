@@ -176,6 +176,24 @@ exports.read_new_messages = function(req, res) {
  });
 };
 
+//Finds messages where querier is the sender
+exports.read_sent_messages = function(req, res) {
+  Message.find({sender: req.params.sender}, function(err,message) {
+    if (err)
+      res.send(err);
+    res.json(message);
+  });
+};
+
+//Finds a message where querier is the receiver and is unread
+exports.read_new_unread_messages = function(req, res) {
+  Message.find({receiver: req.params.receiver, status: 'New'}, function(err, message) {
+    if (err)
+      res.send(err);
+    res.json(message);
+  });
+};
+
 //Lists info for a given user
 exports.retrieve_public_keys = function(req, res) { //GET request of a specific id
   User.find({name: req.params.username}, function(err, message) {
